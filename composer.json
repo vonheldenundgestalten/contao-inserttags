@@ -1,0 +1,40 @@
+{
+    "name": "magmell-agentur/contao-inserttags",
+    "description": "New, clean insert tag handling, adding some custom logic to existing insert tags in Contao 4.\n",
+    "type": "contao-bundle",
+    "authors": [
+        {
+            "name": "Markus Milkereit",
+            "email": "markus.milkereit@magmell.de",
+            "role": "Developer"
+        },
+        {
+            "name": "Marko Todić",
+            "email": "drexplosiveweb@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+    	"contao/core-bundle": "4.4.* || 4.9.*"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.3"
+    },
+    "extra": {
+        "contao-manager-plugin": "Magmell\\Contao\\Inserttags\\ContaoManager\\Plugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Magmell\\Contao\\Inserttags\\": "src"
+        },
+        "classmap": [
+            "src/Resources/contao/"
+        ],
+        "exclude-from-classmap": [
+            "src/Resources/contao/config/",
+            "src/Resources/contao/dca/",
+            "src/Resources/contao/languages/",
+            "src/Resources/contao/templates/"
+        ]
+    }
+}
