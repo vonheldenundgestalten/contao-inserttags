@@ -80,7 +80,11 @@ class InserttagsHook
                 if (isset($_SESSION['FORM_DATA'][$elements[1]]))
                 {
                     $return = $_SESSION['FORM_DATA'][$elements[1]];
-                }
+                } elseif(\Input::get($elements[1])){
+					$return = \Input::get($elements[1]);
+				} else {
+					$return = \Input::post($elements[1]);
+				}
                 break;
         }
 
