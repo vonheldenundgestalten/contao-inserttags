@@ -1,13 +1,13 @@
 # contao-inserttags
 New, clean insert tag handling, adding some custom logic to existing insert tags in Contao 4.x
 
-###Backend Tag rendering
+### Backend Tag rendering
 
 Activates rendering of insert tags in the backend - especially nice for custom elements, included subtemplates, icons and many more tricks in content element organisation.
 
 We're not touching the HTML element - that usually is modules or other "bigger" includes.
 
-###New tags
+### New tags
 
 ##### {{file_vendor::*}}
 Includes php, tpl, xhtml or html5 file where path is relative to ./vendor directory.
