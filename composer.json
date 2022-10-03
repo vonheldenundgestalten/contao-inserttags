@@ -2,6 +2,7 @@
     "name": "vonheldenundgestalten/contao-inserttags",
     "description": "New, clean insert tag handling, adding some custom logic to existing insert tags in Contao 4.\n",
     "type": "contao-bundle",
+    "license": "MIT",
     "authors": [
         {
             "name": "Markus Milkereit",
