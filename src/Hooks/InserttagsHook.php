@@ -86,6 +86,10 @@ class InserttagsHook
 					$return = \Input::post($elements[1]);
 				}
                 break;
+
+            case 'get':
+                $return = \Input::get($elements[1]);
+                break ;
         }
 
         return $return;
