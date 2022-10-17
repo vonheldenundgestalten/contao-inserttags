@@ -28,5 +28,5 @@ Return value from url with function:
 ```
 Input::get($elements[1]);
 ```
-f.e. {{get::movies}} for URL www.example.com/movies/forrest-gump it will reutrn value forrest-gump
+f.e. {{get::movies}} for URL www.example.com/movies/forrest-gump it will reutrn value forrest-gump  
       also it works with classical GET formats example www.example.com/list?movies=forrest-gump will return forrest-gump
