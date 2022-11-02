@@ -5,7 +5,9 @@ namespace Magmell\Contao\Inserttags\EventListener;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\FrontendTemplate;
 use Contao\InsertTags;
-
+use Contao\ArticleModel;
+use Contao\PageModel;
+use Contao\Input;
 
 /**
  * @Hook("parseFrontendTemplate")
