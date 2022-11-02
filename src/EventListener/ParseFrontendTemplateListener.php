@@ -12,14 +12,19 @@ use Contao\InsertTags;
  */
 class ParseFrontendTemplateListener
 {
- 
+
     public function __invoke(string $buffer, string $templateName, FrontendTemplate $template): string
     {
         if (TL_MODE == 'BE' && $templateName != 'ce_html') {
+            if (!$GLOBALS['objPage']) {
+                $a = ArticleModel::findById(Input::get("id"));
+                $b = PageModel::findByPk($a->pid);
+                $GLOBALS['objPage'] = PageModel::findByPk($b->trail[0]);
+            }
             $objIt = new InsertTags();
-            $buffer = $objIt->replace($buffer, true);                            
+            $buffer = $objIt->replace($buffer, true);
         }
-        
+
         return $buffer;
     }
 }
