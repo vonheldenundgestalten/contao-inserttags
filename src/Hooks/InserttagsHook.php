@@ -5,7 +5,7 @@ namespace Magmell\Contao\Inserttags\Hooks;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\Validator;
-
+use Contao\System;
 /**
  * Class InserttagsHook
  * @package Magmell\Contao\Inserttags\Hooks
@@ -58,14 +58,17 @@ class InserttagsHook
                     throw new \RuntimeException('Invalid path ' . $strFile);
                 }
 
+                // Becouse TL_ROOT is deprecated in Contao 5.*, we will use this instead. Its recommended solution from Contao itself
+                $rootDir = System::getContainer()->getParameter('kernel.project_dir');
+
                 // Include .php, .tpl, .xhtml and .html5 files
-                if (preg_match('/\.(php|tpl|xhtml|html5)$/', $strFile) && file_exists(TL_ROOT . '/vendor/' . $strFile))
+                if (preg_match('/\.(php|tpl|xhtml|html5)$/', $strFile) && file_exists($rootDir . '/vendor/' . $strFile))
                 {
                     ob_start();
 
                     try
                     {
-                        include TL_ROOT . '/vendor/' . $strFile;
+                        include $rootDir . '/vendor/' . $strFile;
                         $return = ob_get_contents();
                     } finally {
                         ob_end_clean();
@@ -80,15 +83,15 @@ class InserttagsHook
                 if (isset($_SESSION['FORM_DATA'][$elements[1]]))
                 {
                     $return = $_SESSION['FORM_DATA'][$elements[1]];
-                } elseif(\Input::get($elements[1])){
-					$return = \Input::get($elements[1]);
+                } elseif(Input::get($elements[1])){
+					$return = Input::get($elements[1]);
 				} else {
-					$return = \Input::post($elements[1]);
+					$return = Input::post($elements[1]);
 				}
                 break;
 
             case 'get':
-                $return = \Input::get($elements[1]);
+                $return = Input::get($elements[1]);
                 break ;
         }
 

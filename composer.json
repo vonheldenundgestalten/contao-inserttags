@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-    	"contao/core-bundle": "^4.9"
+    	"contao/core-bundle": "5.*"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.3"
