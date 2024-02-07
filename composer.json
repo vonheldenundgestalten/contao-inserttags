@@ -1,6 +1,6 @@
 {
     "name": "vonheldenundgestalten/contao-inserttags",
-    "description": "New, clean insert tag handling, adding some custom logic to existing insert tags in Contao 4.\n",
+    "description": "New, clean insert tag handling, adding some custom logic to existing insert tags in Contao 5.3.x\n",
     "type": "contao-bundle",
     "license": "MIT",
     "authors": [
@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-    	"contao/core-bundle": "^4.9"
+    	"contao/core-bundle": "^5.3"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.3"

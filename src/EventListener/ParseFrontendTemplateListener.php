@@ -3,6 +3,7 @@
 namespace Magmell\Contao\Inserttags\EventListener;
 
 use Contao\CoreBundle\ServiceAnnotation\Hook;
+use Contao\System;
 use Contao\FrontendTemplate;
 use Contao\InsertTags;
 use Contao\ArticleModel;
@@ -17,7 +18,7 @@ class ParseFrontendTemplateListener
 
     public function __invoke(string $buffer, string $templateName, FrontendTemplate $template): string
     {
-        if (TL_MODE == 'BE' && $templateName != 'ce_html') {
+        if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')) && $templateName != 'ce_html') {
             if (!isset($GLOBALS['objPage']) || !$GLOBALS['objPage']) {
                 $a = ArticleModel::findById(Input::get("id"));
                 $b = PageModel::findByPk($a->pid);

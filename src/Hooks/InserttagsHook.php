@@ -5,6 +5,7 @@ namespace Magmell\Contao\Inserttags\Hooks;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\Validator;
+use Contao\System;
 
 /**
  * Class InserttagsHook
@@ -59,13 +60,13 @@ class InserttagsHook
                 }
 
                 // Include .php, .tpl, .xhtml and .html5 files
-                if (preg_match('/\.(php|tpl|xhtml|html5)$/', $strFile) && file_exists(TL_ROOT . '/vendor/' . $strFile))
+                if (preg_match('/\.(php|tpl|xhtml|html5)$/', $strFile) && file_exists(System::getContainer()->getParameter('kernel.project_dir') . '/vendor/' . $strFile))
                 {
                     ob_start();
 
                     try
                     {
-                        include TL_ROOT . '/vendor/' . $strFile;
+                        include System::getContainer()->getParameter('kernel.project_dir') . '/vendor/' . $strFile;
                         $return = ob_get_contents();
                     } finally {
                         ob_end_clean();
