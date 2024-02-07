@@ -27,8 +27,10 @@ class ParseFrontendTemplateListener
                     $GLOBALS['objPage'] = PageModel::findByPk($b->trail[0]);
                 }
             }
-            $objIt = new InsertTags();
-            $buffer = $objIt->replace($buffer, true);
+
+            //leaving it in for now, but has been made obsolete according to comment here: https://github.com/contao/contao/pull/3622#issuecomment-971806487
+            //$objIt = new InsertTags();
+            //$buffer = $objIt->replace($buffer, true);
         }
 
         return $buffer;
