@@ -5,6 +5,8 @@ namespace Magmell\Contao\Inserttags\EventListener;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\InsertTags;
 use Contao\Input;
+use Contao\System;
+use Contao\CoreBundle\InsertTag\InsertTagParser;
 
 /**
  * @Hook("parseBackendTemplate")
@@ -23,8 +25,7 @@ class ParseBackendTemplateListener
                 AND strpos($buffer, '<div class="cte_type published">HTML</div>') === false
                 AND strpos($buffer, '<div class="cte_type unpublished">HTML</div>') === false
             ){
-                $objIt = new InsertTags();
-                $buffer = $objIt->replace($buffer, true);                
+                $buffer = System::getContainer()->get('contao.insert_tag.parser')->replace($buffer);
             }            
         }
         
