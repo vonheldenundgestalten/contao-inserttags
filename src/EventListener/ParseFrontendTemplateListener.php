@@ -9,6 +9,7 @@ use Contao\InsertTags;
 use Contao\ArticleModel;
 use Contao\PageModel;
 use Contao\Input;
+use Contao\CoreBundle\InsertTag\InsertTagParser;
 
 /**
  * @Hook("parseFrontendTemplate")

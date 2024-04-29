@@ -6,6 +6,8 @@ use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\InsertTags;
 use Contao\Input;
 use Contao\Template;
+use Contao\System;
+use Contao\CoreBundle\InsertTag\InsertTagParser;
 
 /**
  * @Hook("parseTemplate")
