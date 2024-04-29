@@ -14,7 +14,6 @@ class ParseTemplateListener
 {
     public function __invoke(Template $template): void
     {
-        var_dump($template->getName());
         if ('be_main' === false) {
             // modify only if we're not in any action mode, popup or dynamic context
             // modify only if there is no HTML content element involved
@@ -25,9 +24,7 @@ class ParseTemplateListener
                 AND strpos($buffer, '<div class="cte_type published">HTML</div>') === false
                 AND strpos($buffer, '<div class="cte_type unpublished">HTML</div>') === false
             ){
-                // var_dump('Backend Insert Tags loaded'); exit;
-                $objIt = new InsertTags();
-                $buffer = $objIt->replace($buffer, true);                
+                $buffer = System::getContainer()->get('contao.insert_tag.parser')->replace($buffer);         
             }            
         }
         
