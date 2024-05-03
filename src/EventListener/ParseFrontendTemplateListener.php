@@ -5,11 +5,9 @@ namespace Magmell\Contao\Inserttags\EventListener;
 use Contao\CoreBundle\ServiceAnnotation\Hook;
 use Contao\System;
 use Contao\FrontendTemplate;
-use Contao\InsertTags;
 use Contao\ArticleModel;
 use Contao\PageModel;
 use Contao\Input;
-use Contao\CoreBundle\InsertTag\InsertTagParser;
 
 /**
  * @Hook("parseFrontendTemplate")
@@ -23,7 +21,6 @@ class ParseFrontendTemplateListener
             if (!isset($GLOBALS['objPage']) || !$GLOBALS['objPage']) {
                 $a = ArticleModel::findById(Input::get("id"));
                 $b = PageModel::findByPk($a->pid);
-                
                 if($b->trail) {
                     $GLOBALS['objPage'] = PageModel::findByPk($b->trail[0]);
                 }

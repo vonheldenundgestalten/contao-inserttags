@@ -3,15 +3,16 @@
 namespace Magmell\Contao\Inserttags\EventListener;
 
 use Contao\CoreBundle\ServiceAnnotation\Hook;
-use Contao\InsertTags;
 use Contao\Input;
 use Contao\System;
-use Contao\CoreBundle\InsertTag\InsertTagParser;
+use Contao\Template;
+use Contao\StringUtil;
+use Contao\BackendTemplate;
 
 /**
  * @Hook("parseBackendTemplate")
  */
-class ParseBackendTemplateListener
+class ParseBackendTemplateListener extends BackendTemplate
 {
     public function __invoke(string $buffer, string $template): string
     {
@@ -26,9 +27,22 @@ class ParseBackendTemplateListener
                 AND strpos($buffer, '<div class="cte_type unpublished">HTML</div>') === false
             ){
                 $buffer = System::getContainer()->get('contao.insert_tag.parser')->replace($buffer);
+                
+                if (!empty($GLOBALS['TL_CSS']) && \is_array($GLOBALS['TL_CSS']))
+                {
+                    $strStyleSheets = '';
+
+                    foreach (array_unique($GLOBALS['TL_CSS']) as $stylesheet)
+                    {
+                        $options = StringUtil::resolveFlaggedUrl($stylesheet);
+                        $strStyleSheets .= Template::generateStyleTag($this->addStaticUrlTo($stylesheet), $options->media, $options->mtime);
+                    }
+
+                    $this->stylesheets .= $strStyleSheets;
+                    $buffer = str_replace('<head>', '<head>' . $this->stylesheets, $buffer);
+                }
             }            
         }
-        
         return $buffer;
     }
 }
