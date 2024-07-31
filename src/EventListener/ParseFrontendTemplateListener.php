@@ -19,12 +19,14 @@ class ParseFrontendTemplateListener
     {
         if (TL_MODE == 'BE' && $templateName != 'ce_html') {
             if (!isset($GLOBALS['objPage']) || !$GLOBALS['objPage']) {
-                $a = ArticleModel::findById(Input::get("id"));
-                $b = PageModel::findByPk($a->pid);
-                
-                if($b->trail) {
-                    $GLOBALS['objPage'] = PageModel::findByPk($b->trail[0]);
+                if(Input::get('do') == 'article'){
+                    $a = ArticleModel::findById(Input::get("id"));
+                    $b = PageModel::findByPk($a->pid);
+                    if($b->trail) {
+                        $GLOBALS['objPage'] = PageModel::findByPk($b->trail[0]);
+                    }
                 }
+                // @todo add other base content sources
             }
             $objIt = new InsertTags();
             $buffer = $objIt->replace($buffer, true);
