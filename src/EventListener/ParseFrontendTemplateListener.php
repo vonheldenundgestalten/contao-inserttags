@@ -18,7 +18,7 @@ class ParseFrontendTemplateListener
     public function __invoke(string $buffer, string $templateName, FrontendTemplate $template): string
     {
         if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')) && $templateName != 'ce_html') {
-            if (!isset($GLOBALS['objPage']) || !$GLOBALS['objPage']) {
+            if ((!isset($GLOBALS['objPage']) || !$GLOBALS['objPage']) && Input::get("do") == 'article') {
                 $a = ArticleModel::findById(Input::get("id"));
                 $b = PageModel::findByPk($a->pid);
                 if($b->trail) {
