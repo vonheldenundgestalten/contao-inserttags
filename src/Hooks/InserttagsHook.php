@@ -6,14 +6,16 @@ use Contao\Input;
 use Contao\StringUtil;
 use Contao\Validator;
 use Contao\System;
+use Symfony\Component\HttpFoundation\RequestStack; // <-- Add this
+
 
 /**
  * Class InserttagsHook
  * @package Magmell\Contao\Inserttags\Hooks
  */
+
 class InserttagsHook
 {
-
     /**
      * @param $tag
      * @param $blnCache
@@ -27,7 +29,7 @@ class InserttagsHook
      */
     public function doReplace($tag, $blnCache, $strTag, $flags, $tags, $arrCache, $_rit, $_cnt)
     {
-        $return = false;
+        $return = '';
         $elements = explode("::", $tag);
 
         switch (strtolower($elements[0]))
@@ -37,7 +39,6 @@ class InserttagsHook
                 Input::resetCache();
                 $strFile = $elements[1];
 
-                // Take arguments and add them to the $_GET array
                 if (strpos($elements[1], '?') !== false)
                 {
                     $arrChunks = explode('?', urldecode($elements[1]));
@@ -53,13 +54,11 @@ class InserttagsHook
                     $strFile = $arrChunks[0];
                 }
 
-                // Check the path
                 if (Validator::isInsecurePath($strFile))
                 {
                     throw new \RuntimeException('Invalid path ' . $strFile);
                 }
 
-                // Include .php, .tpl, .xhtml and .html5 files
                 if (preg_match('/\.(php|tpl|xhtml|html5)$/', $strFile) && file_exists(System::getContainer()->getParameter('kernel.project_dir') . '/vendor/' . $strFile))
                 {
                     ob_start();
@@ -78,21 +77,25 @@ class InserttagsHook
                 break;
 
             case 'form':
-                if (isset($_SESSION['FORM_DATA'][$elements[1]]))
-                {
-                    $return = $_SESSION['FORM_DATA'][$elements[1]];
-                } elseif(Input::get($elements[1])){
-					$return = Input::get($elements[1]);
-				} else {
-					$return = Input::post($elements[1]);
-				}
+                $requestStack = System::getContainer()->get('request_stack');
+                $request = $requestStack->getCurrentRequest();
+                $session = $request ? $request->getSession() : null;
+                $formData = $session ? $session->get('FORM_DATA', []) : [];
+
+                if (isset($formData[$elements[1]])) {
+                    $return = $formData[$elements[1]];
+                } elseif (Input::get($elements[1])) {
+                    $return = Input::get($elements[1]);
+                } else {
+                    $return = Input::post($elements[1]);
+                }
                 break;
 
             case 'get':
                 $return = Input::get($elements[1]);
-                break ;
+                break;
         }
 
-        return $return;
+        return (string)$return;
     }
 }
