@@ -78,14 +78,18 @@ class InserttagsHook
                 break;
 
             case 'form':
+
+                //Set up session
+                $_SESSION['FORM_DATA'] = $_SESSION['FORM_DATA'] ?? [];
+
                 if (isset($_SESSION['FORM_DATA'][$elements[1]]))
                 {
                     $return = $_SESSION['FORM_DATA'][$elements[1]];
-                } elseif(Input::get($elements[1])){
-					$return = Input::get($elements[1]);
-				} else {
-					$return = Input::post($elements[1]);
-				}
+                } 
+                else{
+                    $return = '';
+                }
+
                 break;
 
             case 'get':
