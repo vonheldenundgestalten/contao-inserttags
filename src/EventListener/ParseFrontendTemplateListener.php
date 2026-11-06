@@ -8,6 +8,7 @@ use Contao\FrontendTemplate;
 use Contao\ArticleModel;
 use Contao\PageModel;
 use Contao\Input;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @Hook("parseFrontendTemplate")
